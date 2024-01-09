@@ -43,7 +43,7 @@ class CartsManager {
     try {
       const cart = this.carts.find(c =>c.id === cartId)
       if(!cart){
-       throw new Error(`no existe un carrito con el id ${cartId}`)
+       return{error:`no existe un carrito con el id ${cartId}`}
       }
       return cart
     } catch (error) {

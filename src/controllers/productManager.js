@@ -79,13 +79,31 @@ class ProductManager {
         arrProducts.splice(index, 1, productUpdated);
         await this.saveFiles(arrProducts);
       } else {
-        console.log("No se encontro el producto");
+        console.log("No se encontro el ID a actualizar");
       }
     } catch (error) {
       console.log("error al actualizar el producto", error);
     }
   }
-
+  
+  //Elimino el producto 
+  async deleteProduct(id) {
+    try {
+      const arrProducts = await this.readFiles();
+      const index = arrProducts.findIndex((item) => item.id === id);
+      if (index !== -1) {
+        arrProducts.splice(index, 1);
+        await this.saveFiles(arrProducts);
+        console.log("Producto eliminado correctamente");
+      } else {
+        console.log("No se encontró el producto a eliminar");
+      }
+    } catch (error) {
+      console.log("Error al eliminar el producto", error);
+    }
+  }
 }
+
+
 
 module.exports = ProductManager;

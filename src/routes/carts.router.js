@@ -13,12 +13,19 @@ router.get("/:cid", async(req,res)=>{
   try {
     const cart = await cartsManager.getCartById(cartsId)
     res.json(cart.products)
+    if(!cart){
+      res.json(cart.products)
+    }else{
+      res.json({message: "El ID de carrito es invalido"})
+    }
   } catch (error) {
     console.error("Error al obtener el carrito", error);
     res.status(500).json({error: "error interno del servidor"})
   }
 })
 
+
+//agregar productos al carrito
 router.post("/:cid/product/:pid", async(req, res)=>{
  const cartId= parseInt(req.params.cid)
  const productId = req.params.pid;
@@ -39,6 +46,7 @@ router.post("/", async (req, res) => {
   try {
     const newCart = await cartsManager.createCart();
     res.json(newCart);
+    console.log(newCart)
   } catch (error) {
     console.error("Error al crear un nuevo carrito", error);
     res.json({ error: "Error del servidor" });
