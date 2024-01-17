@@ -47,11 +47,11 @@ router.delete("/products/:pid", async (req, res) => {
     const existingProduct = await productManager.getProductsById(productIdToDelete);
 
     if (!existingProduct) {
-      // If the product does not exist, return a 404 Not Found response
+
       return res.status(404).json({ status: "error", message: "El Producto no existe" });
     }
 
-    // If the product exists, proceed to delete it
+
     await productManager.deleteProduct(productIdToDelete);
     res.json({ status: "success", message: "Producto Eliminado" });
 
