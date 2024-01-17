@@ -12,11 +12,12 @@ router.get("/:cid", async(req,res)=>{
   const cartsId= parseInt(req.params.cid)
   try {
     const cart = await cartsManager.getCartById(cartsId)
-    res.json(cart.products)
-    if(!cart){
-      res.json(cart.products)
-    }else{
+ 
+    if(!cart){ 
       res.json({message: "El ID de carrito es invalido"})
+     
+    }else{
+      res.json(cart.products)
     }
   } catch (error) {
     console.error("Error al obtener el carrito", error);
@@ -36,7 +37,7 @@ router.post("/:cid/product/:pid", async(req, res)=>{
    res.json(updateCart.products)
  } catch (error) {
   console.error("Error al actualizar el carrito", error)
-  res.status(500).json({error: "error interno del servidor"})
+  res.status(404).json({status: "error" , message: "no se puede agregar el producto a un carrito no existente "})
  }
 })
 

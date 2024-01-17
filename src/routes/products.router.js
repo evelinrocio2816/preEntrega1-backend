@@ -2,7 +2,7 @@ const express =require("express")
 const router =  express.Router()
 const fs = require('fs').promises;
 const ProductManager = require("../controllers/productManager.js")
-const productManager =new ProductManager("./src/models/productos.json")
+const productManager =new ProductManager("./src/models/products.json")
 
 //Router
 
@@ -10,7 +10,13 @@ const productManager =new ProductManager("./src/models/productos.json")
 router.post("/products", async (req, res) => {
   try {
     const newProduct = req.body;
-    await productManager.addProduct(newProduct);
+    
+     const existingProduct = await productManager.getProductsById(newProduct.id);
+     if (existingProduct) {
+   
+       return res.status(400).json({ status: "error", message: "El ID del producto ya existe" });
+     }
+     await productManager.addProduct(newProduct);
     res.json({ status: "success", message: "Producto Creado" });
   } catch (error) {
     console.error("Error al procesar la solicitud:", error);
@@ -34,19 +40,27 @@ router.post("/products", async (req, res) => {
   
 
 
-
-
-// Ruta DELETE para eliminar un producto por ID
+ //Ruta DELETE para eliminar un producto por ID
 router.delete("/products/:pid", async (req, res) => {
   try {
-    const productIdToDelete = req.params.pid;
+    const productIdToDelete = parseInt(req.params.pid) ;
+    const existingProduct = await productManager.getProductsById(productIdToDelete);
+
+    if (!existingProduct) {
+      // If the product does not exist, return a 404 Not Found response
+      return res.status(404).json({ status: "error", message: "El Producto no existe" });
+    }
+
+    // If the product exists, proceed to delete it
     await productManager.deleteProduct(productIdToDelete);
     res.json({ status: "success", message: "Producto Eliminado" });
+
   } catch (error) {
     console.error("Error al procesar la solicitud:", error);
     res.status(500).json({ status: "error", message: "Error interno del servidor" });
   }
 });
+
 
 
 

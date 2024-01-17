@@ -1,38 +1,46 @@
 const fs = require("fs").promises;
 
 class ProductManager {
-  static ultId = 0;
-  constructor(path) {
+  
+  constructor(path) {  
     this.products = [];
     this.path = path;
+    this.ultId= 0;
   }
 
   async addProduct(newObject) {
     let { title, description, price, image, code, stock } = newObject;
+   
     if ((!title || !description || !price || !image|| !code || !stock)) {
       console.log("Todos los campos deben ser completados");
       return;
+    } 
+    const productsInJSON = await this.readFiles()
+    if(productsInJSON.length > 0){
+      this.ultId = Math.max(...productsInJSON.map(product => product.id))
     }
-    if (this.products.some((item) => item.code === code)) {
+    if (productsInJSON.some((item) => item.code === code)) {
       console.log("El codigo debe ser unico, no debe repetirse");
       return;
     }
     const newProduct = {
-      id: ++ProductManager.ultId,
+      id: ++this.ultId,
       title,
       description,
       price,
       image,
       code,
       stock,
+      status: true,
     };
-    this.products.push(newProduct);
+    
+    productsInJSON.push(newProduct);
 
-    await this.saveFiles(this.products);
+    await this.saveFiles(productsInJSON);
   }
 
   getProducts() {
-    console.log(this.products);
+    console.log(productsInJSON);
   
   }
 
@@ -43,9 +51,9 @@ class ProductManager {
       const arrProducts = await this.readFiles();
       const buscado = arrProducts.find((item) => item.id === id);
       if (!buscado) {
-        console.log("PRODUCTO NO ENCONTRADO!👎");
+        console.log("PRODUCTO ENCONTRADO!👎");
       } else {
-        console.log("PRODUCTO ENCONTRADO 👍", buscado);
+        console.log("PRODUCTO NO ENCONTRADO 👍", buscado);
         return buscado;
       }
     } catch (error) {
@@ -76,7 +84,7 @@ class ProductManager {
       const arrProducts = await this.readFiles();
       const index = arrProducts.findIndex((item) => item.id === id);
       if (index !== -1) {
-        arrProducts.splice(index, 1, productUpdated);
+        arrProducts.splice(index, 1, {id:id,...productUpdated});
         await this.saveFiles(arrProducts);
       } else {
         console.log("No se encontro el ID a actualizar");
@@ -90,7 +98,7 @@ class ProductManager {
   async deleteProduct(id) {
     try {
       const arrProducts = await this.readFiles();
-      const index = arrProducts.findIndex((item) => item.id === id);
+      const index = arrProducts.findIndex((item) => item.id == id);
       if (index !== -1) {
         arrProducts.splice(index, 1);
         await this.saveFiles(arrProducts);

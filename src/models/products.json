@@ -1,27 +1,5 @@
 [
   {
-    "id": 1,
-    "title": "iPhone 13",
-    "price": 999.99,
-    "image": "iphone13.jpg",
-    "description": "El último modelo de iPhone con increíbles características.",
-    "code": "APL-IPH-13",
-    "stock": 50,
-    "status": true,
-    "category": "smartphone"
-  },
-  {
-    "id": 2,
-    "title": "Samsung Galaxy Book Pro",
-    "price": 1299.99,
-    "image": "galaxybookpro.jpg",
-    "description": "Potente laptop para tus necesidades profesionales y de entretenimiento.",
-    "code": "SAM-GBP",
-    "stock": 30,
-    "status": true,
-    "category": "laptop"
-  },
-  {
     "id": 3,
     "title": "Dell UltraSharp U2720Q",
     "price": 449.99,
@@ -31,17 +9,6 @@
     "stock": 20,
     "status": true,
     "category": "monitor"
-  },
-  {
-    "id": 6,
-    "title": "Logitech MX Master 3",
-    "price": 99.99,
-    "image": "mxmaster3.jpg",
-    "description": "Ratón avanzado para mejorar tu experiencia de trabajo.",
-    "code": "LOG-MX3",
-    "stock": 40,
-    "status": true,
-    "category": "accesorio"
   },
   {
     "id": 7,
@@ -77,14 +44,13 @@
     "category": "gaming"
   },
   {
-    "id": 10,
-    "title": "Fitbit Charge 5",
-    "price": 179.99,
-    "image": "fitbitcharge5.jpg",
-    "description": "Rastreador de actividad para monitorizar tu salud y forma física.",
-    "code": "FIT-CHARGE5",
-    "stock": 35,
-    "status": true,
-    "category": "dispositivo ponible"
+    "id": 11,
+    "title": "Samsung Galaxi",
+    "description": "la mejor pantalla para tus necesidades",
+    "price": 3,
+    "image": "Sin imagen",
+    "code": "RER-GB",
+    "stock": 21,
+    "status": true
   }
 ]
